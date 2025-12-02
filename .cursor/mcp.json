@@ -1,0 +1,14 @@
+{
+	"mcpServers": {
+		"ex-mcp-test": {
+			"command": "elixir",
+			"args": [
+				"--no-halt",
+				"-S",
+				"mix",
+				"run"
+			],
+			"cwd": "${workspaceFolder}/ex-mcp-test"
+		}
+	}
+}
