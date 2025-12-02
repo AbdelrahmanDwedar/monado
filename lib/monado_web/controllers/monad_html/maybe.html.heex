@@ -1,0 +1,246 @@
+<div class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="/" class="text-2xl font-bold text-purple-600">Monado</a>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a href="/maybe" class="border-purple-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Maybe Monad
+            </a>
+            <a href="/result" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Result Monad
+            </a>
+            <a href="/demo" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Interactive Demo
+            </a>
+            <a href="/comparison" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Before/After
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-gray-900 mb-4">
+        The Maybe Monad
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        See how we use it in THIS website to handle optional values safely
+      </p>
+    </div>
+
+    <!-- What is Maybe Section -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">What is the Maybe Monad?</h2>
+      
+      <div class="prose prose-lg max-w-none">
+        <p class="text-gray-700 mb-4">
+          The <strong>Maybe monad</strong> represents computations that might not produce a value. 
+          Instead of dealing with <code>nil</code> and risking crashes, we wrap values in a container:
+        </p>
+        
+        <div class="bg-gray-50 p-6 rounded-lg my-6">
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <span class="text-green-600 font-bold mr-2">✓</span>
+              <span><code class="bg-purple-100 px-2 py-1 rounded">{:just, value}</code> — We have a value</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-blue-600 font-bold mr-2">∅</span>
+              <span><code class="bg-purple-100 px-2 py-1 rounded">:nothing</code> — We don't have a value</span>
+            </li>
+          </ul>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Why Use Maybe?</h3>
+        <ul class="space-y-2 list-disc list-inside text-gray-700">
+          <li><strong>No more nil crashes:</strong> The type system forces you to handle both cases</li>
+          <li><strong>Composable:</strong> Chain operations without nested if statements</li>
+          <li><strong>Readable:</strong> Code reads like a clear pipeline of transformations</li>
+          <li><strong>Testable:</strong> Each step is independent and easy to test</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Real World Examples from THIS Website -->
+    <div class="space-y-8">
+      <%= for {example, index} <- Enum.with_index(@examples, 1) do %>
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="flex items-start mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 font-bold text-xl mr-4">
+              <%= index %>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2"><%= example.title %></h3>
+              <p class="text-sm text-purple-600 mb-4">
+                📍 Location: <code class="bg-purple-50 px-2 py-1 rounded"><%= example.location %></code>
+              </p>
+            </div>
+          </div>
+
+          <!-- Problem Statement -->
+          <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+            <h4 class="font-bold text-yellow-900 mb-2">🎯 Problem</h4>
+            <p class="text-yellow-800"><%= example.problem %></p>
+          </div>
+
+          <!-- Without Monad -->
+          <div class="mb-6">
+            <h4 class="text-lg font-bold text-gray-900 mb-3">❌ Without Maybe Monad</h4>
+            <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+              <pre class="text-red-300 font-mono text-sm"><%= example.without_monad %></pre>
+            </div>
+            <p class="text-sm text-gray-600 mt-2 italic">Deeply nested, hard to read, easy to miss edge cases</p>
+          </div>
+
+          <!-- With Monad -->
+          <div class="mb-6">
+            <h4 class="text-lg font-bold text-gray-900 mb-3">✅ With Maybe Monad (Actual Code from This Website!)</h4>
+            <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+              <pre class="text-green-300 font-mono text-sm"><%= example.with_monad %></pre>
+            </div>
+            <p class="text-sm text-green-700 mt-2 font-semibold">Clean pipeline, easy to read, handles all cases</p>
+          </div>
+
+          <!-- Benefits -->
+          <div class="bg-green-50 rounded-lg p-6">
+            <h4 class="font-bold text-green-900 mb-3">💡 Benefits</h4>
+            <ul class="space-y-2">
+              <%= for benefit <- example.benefits do %>
+                <li class="flex items-start text-green-800">
+                  <span class="text-green-600 mr-2">✓</span>
+                  <span><%= benefit %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- How Maybe Works -->
+    <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg shadow-lg p-8 mt-8 text-white">
+      <h2 class="text-3xl font-bold mb-6">How Maybe Monad Works</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">1. Wrap Values</h3>
+          <div class="bg-black/30 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">Maybe.return(42)          # {:just, 42}
+Maybe.return(nil)         # :nothing</pre>
+          </div>
+          <p class="text-purple-100">Everything goes into the Maybe container</p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">2. Transform Safely with map</h3>
+          <div class="bg-black/30 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">{:just, 5} |> Maybe.map(fn x -> x * 2 end)
+# {:just, 10}
+
+:nothing |> Maybe.map(fn x -> x * 2 end)
+# :nothing  (function never runs!)</pre>
+          </div>
+          <p class="text-purple-100">Operations skip over :nothing automatically</p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">3. Chain with bind</h3>
+          <div class="bg-black/30 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">{:just, "42"}
+|> Maybe.bind(&amp;parse_int/1)        # {:just, 42}
+|> Maybe.bind(&amp;validate_positive/1) # {:just, 42}
+|> Maybe.map(fn x -> x * 2 end)     # {:just, 84}
+# Chain stops at first :nothing!</pre>
+          </div>
+          <p class="text-purple-100">Link operations that might fail</p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">4. Extract with Default</h3>
+          <div class="bg-black/30 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">Maybe.from_maybe({:just, 42}, 0)   # 42
+Maybe.from_maybe(:nothing, 0)       # 0</pre>
+          </div>
+          <p class="text-purple-100">Get the value out with a fallback</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Try It Yourself -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Try It Yourself!</h2>
+      
+      <p class="text-gray-700 mb-6 text-lg">
+        This very page uses the Maybe monad to handle the language parameter. Try these URLs:
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <a href="/maybe?lang=haskell" class="block p-4 border-2 border-purple-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-colors">
+          <code class="text-purple-700 font-semibold">/maybe?lang=haskell</code>
+          <p class="text-sm text-gray-600 mt-2">✓ Valid parameter - accepted</p>
+        </a>
+        
+        <a href="/maybe?lang=RUST" class="block p-4 border-2 border-purple-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-colors">
+          <code class="text-purple-700 font-semibold">/maybe?lang=RUST</code>
+          <p class="text-sm text-gray-600 mt-2">✓ Uppercase - normalized with map</p>
+        </a>
+        
+        <a href="/maybe?lang=invalid" class="block p-4 border-2 border-purple-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-colors">
+          <code class="text-purple-700 font-semibold">/maybe?lang=invalid</code>
+          <p class="text-sm text-gray-600 mt-2">∅ Invalid - filtered out, defaults to elixir</p>
+        </a>
+        
+        <a href="/maybe" class="block p-4 border-2 border-purple-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-colors">
+          <code class="text-purple-700 font-semibold">/maybe</code>
+          <p class="text-sm text-gray-600 mt-2">∅ No parameter - uses default</p>
+        </a>
+      </div>
+
+      <div class="mt-6 bg-purple-50 border-l-4 border-purple-500 p-4">
+        <p class="text-purple-900">
+          <strong>💡 Behind the scenes:</strong> The controller uses <code>Maybe.return()</code>, 
+          <code>Maybe.map()</code>, and <code>Maybe.filter()</code> to handle all these cases in a clean pipeline. 
+          No crashes, no complex if statements!
+        </p>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg p-8 mt-8 text-white text-center">
+      <h2 class="text-3xl font-bold mb-4">Want to Try More Examples?</h2>
+      <p class="text-xl mb-6 text-blue-100">
+        Head to our interactive demo to experiment with Maybe monad operations!
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a 
+          href="/demo" 
+          class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
+        >
+          Try Interactive Demo →
+        </a>
+        <a 
+          href="/result" 
+          class="inline-block bg-purple-700 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-purple-800 transition-colors"
+        >
+          Learn Result Monad →
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <p class="text-center text-gray-500">
+        Monado - Learning Monads Through Practice | Built with Phoenix & Elixir
+      </p>
+    </div>
+  </footer>
+</div>

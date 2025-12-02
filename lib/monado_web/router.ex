@@ -18,6 +18,10 @@ defmodule MonadoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/maybe", MonadController, :maybe
+    get "/result", MonadController, :result
+    get "/demo", MonadController, :demo
+    get "/comparison", MonadController, :comparison
   end
 
   # Other scopes may use custom stacks.

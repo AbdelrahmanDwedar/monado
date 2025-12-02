@@ -1,0 +1,403 @@
+<div class="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="/" class="text-2xl font-bold text-purple-600">Monado</a>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a href="/maybe" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Maybe Monad
+            </a>
+            <a href="/result" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Result Monad
+            </a>
+            <a href="/demo" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Interactive Demo
+            </a>
+            <a href="/comparison" class="border-orange-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Before/After
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-bold text-gray-900 mb-4">
+        Before & After Monads
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        See the dramatic difference monads make in real code
+      </p>
+    </div>
+
+    <!-- Real Before/After Example -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Real-World Scenario</h2>
+      <p class="text-xl text-gray-700 mb-6"><%= @before_after.scenario %></p>
+      
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div class="border-2 border-red-300 rounded-lg p-6">
+          <div class="flex items-center mb-4">
+            <span class="text-4xl mr-3">😰</span>
+            <h3 class="text-2xl font-bold text-red-700">Without Monads</h3>
+          </div>
+          <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto mb-4">
+            <pre class="text-red-300 font-mono text-sm"><%= @before_after.without_monads %></pre>
+          </div>
+          <ul class="space-y-2 text-sm text-red-800">
+            <li>❌ 6 levels of nesting</li>
+            <li>❌ Hard to follow the flow</li>
+            <li>❌ Difficult to add new steps</li>
+            <li>❌ Error handling scattered everywhere</li>
+            <li>❌ Easy to miss edge cases</li>
+          </ul>
+        </div>
+
+        <!-- After -->
+        <div class="border-2 border-green-300 rounded-lg p-6">
+          <div class="flex items-center mb-4">
+            <span class="text-4xl mr-3">😊</span>
+            <h3 class="text-2xl font-bold text-green-700">With Monads</h3>
+          </div>
+          <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto mb-4">
+            <pre class="text-green-300 font-mono text-sm"><%= @before_after.with_monads %></pre>
+          </div>
+          <ul class="space-y-2 text-sm text-green-800">
+            <li>✓ Linear, easy-to-read pipeline</li>
+            <li>✓ Each step is independent</li>
+            <li>✓ Trivial to add/remove steps</li>
+            <li>✓ Consistent error handling</li>
+            <li>✓ Type-safe, compiler helps</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Improvements -->
+      <div class="mt-8 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg p-6">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">🎉 Improvements</h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <%= for improvement <- @before_after.improvements do %>
+            <div class="flex items-start bg-white rounded-lg p-4 shadow">
+              <span class="text-green-600 mr-2 text-xl">✓</span>
+              <span class="text-gray-800"><%= improvement %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Comparison Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Monad</th>
+              <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Purpose</th>
+              <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Success Type</th>
+              <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Failure Type</th>
+              <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">Use When</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr class="hover:bg-purple-50 transition-colors">
+              <td class="px-6 py-4 font-bold text-purple-700">Maybe</td>
+              <td class="px-6 py-4 text-gray-700">Handle optional values</td>
+              <td class="px-6 py-4"><code class="bg-purple-100 px-2 py-1 rounded text-sm">{:just, value}</code></td>
+              <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-sm">:nothing</code></td>
+              <td class="px-6 py-4 text-sm text-gray-600">Value might not exist, no error details needed</td>
+            </tr>
+            <tr class="hover:bg-green-50 transition-colors">
+              <td class="px-6 py-4 font-bold text-green-700">Result</td>
+              <td class="px-6 py-4 text-gray-700">Handle errors explicitly</td>
+              <td class="px-6 py-4"><code class="bg-green-100 px-2 py-1 rounded text-sm">{:ok, value}</code></td>
+              <td class="px-6 py-4"><code class="bg-red-100 px-2 py-1 rounded text-sm">{:error, reason}</code></td>
+              <td class="px-6 py-4 text-sm text-gray-600">Operation can fail, need error context</td>
+            </tr>
+            <tr class="hover:bg-blue-50 transition-colors">
+              <td class="px-6 py-4 font-bold text-blue-700">List</td>
+              <td class="px-6 py-4 text-gray-700">Handle multiple values</td>
+              <td class="px-6 py-4"><code class="bg-blue-100 px-2 py-1 rounded text-sm">[values]</code></td>
+              <td class="px-6 py-4"><code class="bg-gray-100 px-2 py-1 rounded text-sm">[]</code></td>
+              <td class="px-6 py-4 text-sm text-gray-600">Non-deterministic computations</td>
+            </tr>
+            <tr class="hover:bg-yellow-50 transition-colors">
+              <td class="px-6 py-4 font-bold text-yellow-700">IO</td>
+              <td class="px-6 py-4 text-gray-700">Handle side effects</td>
+              <td class="px-6 py-4"><code class="bg-yellow-100 px-2 py-1 rounded text-sm">IO value</code></td>
+              <td class="px-6 py-4 text-gray-500 text-sm">N/A</td>
+              <td class="px-6 py-4 text-sm text-gray-600">Side-effectful operations</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Detailed Comparisons -->
+    <div class="space-y-8">
+      <!-- Maybe vs Result -->
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Maybe vs Result: When to Use Which?</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Maybe Column -->
+          <div class="border-2 border-purple-300 rounded-lg p-6">
+            <h3 class="text-2xl font-bold text-purple-700 mb-4 flex items-center">
+              <span class="text-3xl mr-2">🎁</span>
+              Maybe Monad
+            </h3>
+            
+            <h4 class="font-bold text-gray-900 mb-2">Best For:</h4>
+            <ul class="space-y-2 mb-4 text-gray-700">
+              <li>✓ Finding items in collections</li>
+              <li>✓ Parsing simple values</li>
+              <li>✓ Optional configuration</li>
+              <li>✓ When failure reason doesn't matter</li>
+            </ul>
+
+            <h4 class="font-bold text-gray-900 mb-2">Example:</h4>
+            <div class="bg-gray-900 rounded p-4 font-mono text-sm text-purple-300 overflow-x-auto">
+              <pre># Find user by ID
+users = %{1 => "Alice", 2 => "Bob"}
+
+Map.get(users, 1) 
+|> Maybe.return()
+# {:just, "Alice"}
+
+Map.get(users, 99)
+|> Maybe.return()
+# :nothing</pre>
+            </div>
+
+            <div class="mt-4 bg-purple-50 rounded p-4">
+              <p class="text-sm text-purple-900">
+                <strong>Key insight:</strong> Use Maybe when you just need to know "did we get a value or not?"
+              </p>
+            </div>
+          </div>
+
+          <!-- Result Column -->
+          <div class="border-2 border-green-300 rounded-lg p-6">
+            <h3 class="text-2xl font-bold text-green-700 mb-4 flex items-center">
+              <span class="text-3xl mr-2">📋</span>
+              Result Monad
+            </h3>
+            
+            <h4 class="font-bold text-gray-900 mb-2">Best For:</h4>
+            <ul class="space-y-2 mb-4 text-gray-700">
+              <li>✓ Validation with feedback</li>
+              <li>✓ File I/O operations</li>
+              <li>✓ Network requests</li>
+              <li>✓ When you need to know WHY it failed</li>
+            </ul>
+
+            <h4 class="font-bold text-gray-900 mb-2">Example:</h4>
+            <div class="bg-gray-900 rounded p-4 font-mono text-sm text-green-300 overflow-x-auto">
+              <pre># Validate user age
+validate_age = fn age ->
+  cond do
+    age < 0 -> 
+      {:error, "Age cannot be negative"}
+    age > 150 -> 
+      {:error, "Age too large"}
+    true -> 
+      {:ok, age}
+  end
+end
+
+validate_age.(25)  
+# {:ok, 25}
+
+validate_age.(-5)  
+# {:error, "Age cannot be negative"}</pre>
+            </div>
+
+            <div class="mt-4 bg-green-50 rounded p-4">
+              <p class="text-sm text-green-900">
+                <strong>Key insight:</strong> Use Result when error details matter for debugging or user feedback!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side by Side Code Comparison -->
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Same Problem, Different Approaches</h2>
+        
+        <p class="text-gray-700 mb-6">
+          Let's solve the same problem (safe division) with different approaches:
+        </p>
+
+        <div class="space-y-6">
+          <!-- Traditional Approach -->
+          <div class="border-l-4 border-red-500 pl-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Traditional Approach (Not Recommended)</h3>
+            <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-red-300 overflow-x-auto">
+              <pre>def divide(a, b):
+    if b == 0:
+        return None  # Lost information!
+    return a / b
+
+result = divide(10, 0)
+if result is None:
+    # Why did it fail? We don't know!
+    print("Error!")</pre>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+              ⚠️ Problems: No error context, easy to forget null check, unclear intent
+            </p>
+          </div>
+
+          <!-- Maybe Approach -->
+          <div class="border-l-4 border-purple-500 pl-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">🎁 Maybe Monad Approach</h3>
+            <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-purple-300 overflow-x-auto">
+              <pre>def divide(a, b):
+    if b == 0:
+        return :nothing
+    return {:just, a / b}
+
+result = divide(10, 0)
+case result:
+    {:just, value} -> use_value(value)
+    :nothing -> handle_failure()  # Type-safe!</pre>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+              ✓ Benefits: Type-safe, composable, but no error details
+            </p>
+          </div>
+
+          <!-- Result Approach -->
+          <div class="border-l-4 border-green-500 pl-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">📋 Result Monad Approach (Best!)</h3>
+            <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-300 overflow-x-auto">
+              <pre>def divide(a, b):
+    if b == 0:
+        return {:error, "Division by zero"}
+    return {:ok, a / b}
+
+result = divide(10, 0)
+case result:
+    {:ok, value} -> use_value(value)
+    {:error, reason} -> 
+        log(reason)  # We know exactly what went wrong!
+        handle_failure()</pre>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">
+              ✓✓ Benefits: Type-safe, composable, AND provides error context!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conversion Chart -->
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Converting Between Monads</h2>
+        
+        <p class="text-gray-700 mb-6">
+          Sometimes you need to convert from one monad to another:
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-purple-100 to-green-100 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">Maybe → Result</h3>
+            <div class="bg-gray-900 rounded p-4 font-mono text-sm text-green-300 overflow-x-auto">
+              <pre>Result.from_maybe(
+  {:just, 42}, 
+  "No value found"
+)
+# {:ok, 42}
+
+Result.from_maybe(
+  :nothing, 
+  "No value found"
+)
+# {:error, "No value found"}</pre>
+            </div>
+            <p class="text-sm text-gray-700 mt-3">
+              Use when you need to add error context to a Maybe
+            </p>
+          </div>
+
+          <div class="bg-gradient-to-br from-green-100 to-purple-100 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-3">Result → Maybe</h3>
+            <div class="bg-gray-900 rounded p-4 font-mono text-sm text-purple-300 overflow-x-auto">
+              <pre>result_to_maybe = fn
+  {:ok, value} -> {:just, value}
+  {:error, _} -> :nothing
+end
+
+result_to_maybe.({:ok, 42})
+# {:just, 42}
+
+result_to_maybe.({:error, "failed"})
+# :nothing</pre>
+            </div>
+            <p class="text-sm text-gray-700 mt-3">
+              Use when you don't care about the error details
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Decision Tree -->
+      <div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-lg shadow-lg p-8 text-white">
+        <h2 class="text-3xl font-bold mb-6">Decision Tree: Which Monad Should I Use?</h2>
+        
+        <div class="space-y-4 text-lg">
+          <div class="flex items-start">
+            <span class="flex-shrink-0 w-8 h-8 bg-white text-orange-600 rounded-full flex items-center justify-center font-bold mr-3">?</span>
+            <div>
+              <strong>Can the operation fail or return nothing?</strong>
+              <div class="ml-8 mt-2 space-y-2 text-base">
+                <div class="flex items-start">
+                  <span class="mr-2">❌ No</span>
+                  <span class="text-orange-100">→ Don't use a monad (or use Identity)</span>
+                </div>
+                <div>
+                  <div class="flex items-start">
+                    <span class="mr-2">✓ Yes</span>
+                    <span class="text-orange-100">→ Continue...</span>
+                  </div>
+                  <div class="ml-8 mt-2 space-y-2">
+                    <div class="flex items-start">
+                      <span class="mr-2">↓</span>
+                      <span><strong>Do you need to know WHY it failed?</strong></span>
+                    </div>
+                    <div class="ml-8 space-y-2 text-base">
+                      <div class="flex items-start">
+                        <span class="mr-2">❌ No</span>
+                        <span class="text-orange-100">→ Use <strong>Maybe</strong> monad</span>
+                      </div>
+                      <div class="flex items-start">
+                        <span class="mr-2">✓ Yes</span>
+                        <span class="text-orange-100">→ Use <strong>Result</strong> monad</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <p class="text-center text-gray-500">
+        Monado - Learning Monads Through Practice | Built with Phoenix & Elixir
+      </p>
+    </div>
+  </footer>
+</div>
+

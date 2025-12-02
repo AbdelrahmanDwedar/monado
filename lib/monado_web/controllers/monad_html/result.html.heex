@@ -1,0 +1,279 @@
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-teal-50">
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="/" class="text-2xl font-bold text-purple-600">Monado</a>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a href="/maybe" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Maybe Monad
+            </a>
+            <a href="/result" class="border-green-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Result Monad
+            </a>
+            <a href="/demo" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Interactive Demo
+            </a>
+            <a href="/comparison" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+              Before/After
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Hero Section -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-gray-900 mb-4">
+        The Result Monad
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        See how we use it in THIS website for explicit error handling
+      </p>
+    </div>
+
+    <!-- What is Result Section -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">What is the Result Monad?</h2>
+      
+      <div class="prose prose-lg max-w-none">
+        <p class="text-gray-700 mb-4">
+          The <strong>Result monad</strong> (also called Either) represents computations that can succeed or fail. 
+          Instead of throwing exceptions, we return explicit success or error values with context:
+        </p>
+        
+        <div class="bg-gray-50 p-6 rounded-lg my-6">
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <span class="text-green-600 font-bold mr-2 text-2xl">✓</span>
+              <span><code class="bg-green-100 px-2 py-1 rounded">{:ok, value}</code> — Success! Here's the value</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-red-600 font-bold mr-2 text-2xl">✗</span>
+              <span><code class="bg-red-100 px-2 py-1 rounded">{:error, reason}</code> — Failed! Here's why</span>
+            </li>
+          </ul>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Why Use Result?</h3>
+        <ul class="space-y-2 list-disc list-inside text-gray-700">
+          <li><strong>Explicit errors:</strong> Errors are part of the type, not hidden in try-catch</li>
+          <li><strong>Error context:</strong> Know exactly what went wrong and why</li>
+          <li><strong>No exceptions:</strong> Predictable control flow, no hidden paths</li>
+          <li><strong>Composable:</strong> Chain operations that might fail cleanly</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Real World Examples from THIS Website -->
+    <div class="space-y-8">
+      <%= for {example, index} <- Enum.with_index(@examples, 1) do %>
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="flex items-start mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold text-xl mr-4">
+              <%= index %>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2"><%= example.title %></h3>
+              <p class="text-sm text-green-600 mb-4">
+                📍 Location: <code class="bg-green-50 px-2 py-1 rounded"><%= example.location %></code>
+              </p>
+            </div>
+          </div>
+
+          <!-- Problem Statement -->
+          <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+            <h4 class="font-bold text-yellow-900 mb-2">🎯 Problem</h4>
+            <p class="text-yellow-800"><%= example.problem %></p>
+          </div>
+
+          <!-- Without Monad (if provided) -->
+          <%= if Map.has_key?(example, :without_monad) do %>
+            <div class="mb-6">
+              <h4 class="text-lg font-bold text-gray-900 mb-3">❌ Without Result Monad</h4>
+              <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+                <pre class="text-red-300 font-mono text-sm"><%= example.without_monad %></pre>
+              </div>
+              <p class="text-sm text-gray-600 mt-2 italic">Exception-based, unclear error handling, hard to reason about</p>
+            </div>
+          <% end %>
+
+          <!-- With Monad -->
+          <div class="mb-6">
+            <h4 class="text-lg font-bold text-gray-900 mb-3">✅ With Result Monad (Actual Code from This Website!)</h4>
+            <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+              <pre class="text-green-300 font-mono text-sm"><%= example.with_monad %></pre>
+            </div>
+            <p class="text-sm text-green-700 mt-2 font-semibold">Explicit error handling, clear flow, specific error messages</p>
+          </div>
+
+          <!-- Benefits -->
+          <div class="bg-green-50 rounded-lg p-6">
+            <h4 class="font-bold text-green-900 mb-3">💡 Benefits</h4>
+            <ul class="space-y-2">
+              <%= for benefit <- example.benefits do %>
+                <li class="flex items-start text-green-800">
+                  <span class="text-green-600 mr-2">✓</span>
+                  <span><%= benefit %></span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Why Not Exceptions? -->
+    <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-lg shadow-lg p-8 mt-8 text-white">
+      <h2 class="text-3xl font-bold mb-6">Result Monad vs. Exceptions</h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">❌ Problems with Exceptions</h3>
+          <ul class="space-y-2 text-red-100">
+            <li>• Hidden control flow - can be thrown anywhere</li>
+            <li>• Lost context - stack traces don't explain "why"</li>
+            <li>• Performance cost - stack unwinding is expensive</li>
+            <li>• Easy to forget - no type checking forces handling</li>
+            <li>• Hard to compose - try-catch doesn't chain</li>
+          </ul>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">✅ Benefits of Result Monad</h3>
+          <ul class="space-y-2 text-green-100">
+            <li>• Explicit control flow - errors are values</li>
+            <li>• Rich context - carry detailed error information</li>
+            <li>• Zero performance cost - just pattern matching</li>
+            <li>• Type-safe - compiler ensures you handle errors</li>
+            <li>• Composable - chain with bind/map easily</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- How Result Works -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">How Result Monad Works</h2>
+      
+      <div class="space-y-6">
+        <div class="border-l-4 border-green-500 pl-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">1. Wrap Success or Failure</h3>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">Result.ok(42)                    # {:ok, 42}
+Result.error("not found")        # {:error, "not found"}</pre>
+          </div>
+          <p class="text-gray-700">Every operation returns either Ok or Error</p>
+        </div>
+
+        <div class="border-l-4 border-blue-500 pl-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">2. Chain with bind</h3>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">user_id
+|> find_user()                   # {:ok, user} or {:error, reason}
+|> Result.bind(&amp;validate_user/1)  # Chain stops on first error
+|> Result.bind(&amp;update_user/1)</pre>
+          </div>
+          <p class="text-gray-700">Operations short-circuit on first error</p>
+        </div>
+
+        <div class="border-l-4 border-purple-500 pl-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">3. Transform with map</h3>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">{:ok, "hello"}
+|> Result.map(&amp;String.upcase/1)   # {:ok, "HELLO"}
+
+{:error, "failed"}
+|> Result.map(&amp;String.upcase/1)   # {:error, "failed"} (skipped)</pre>
+          </div>
+          <p class="text-gray-700">Transform success values, errors pass through</p>
+        </div>
+
+        <div class="border-l-4 border-orange-500 pl-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">4. Extract or Handle</h3>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm mb-2">
+            <pre class="text-green-300">result = some_operation()
+case result do
+  {:ok, value} -> use_value(value)
+  {:error, reason} -> handle_error(reason)
+end</pre>
+          </div>
+          <p class="text-gray-700">Pattern match to handle both cases</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common Patterns -->
+    <div class="bg-white rounded-lg shadow-lg p-8 mt-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Common Patterns We Use</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-lg p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Validation Pipeline</h3>
+          <p class="text-gray-700 mb-3">Chain multiple validations - stops at first failure:</p>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm">
+            <pre class="text-green-300">input
+|> validate_format()
+|> Result.bind(&amp;validate_length/1)
+|> Result.bind(&amp;validate_uniqueness/1)
+|> Result.bind(&amp;save_to_db/1)</pre>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Error Recovery</h3>
+          <p class="text-gray-700 mb-3">Provide defaults when operations fail:</p>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm">
+            <pre class="text-blue-300">fetch_user_preference(user_id)
+|> Result.from_result(default_preference)</pre>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Error Transformation</h3>
+          <p class="text-gray-700 mb-3">Convert technical errors to user-friendly messages:</p>
+          <div class="bg-gray-900 rounded p-4 font-mono text-sm">
+            <pre class="text-purple-300">database_query()
+|> Result.map_error(fn _db_error -> 
+     "Sorry, something went wrong. Please try again."
+   end)</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="bg-gradient-to-r from-teal-500 to-green-500 rounded-lg shadow-lg p-8 mt-8 text-white text-center">
+      <h2 class="text-3xl font-bold mb-4">Try It in Action!</h2>
+      <p class="text-xl mb-6 text-teal-100">
+        See Result monad handle errors in our interactive demos
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a 
+          href="/demo?operation=safe_divide&input=10,2" 
+          class="inline-block bg-white text-green-600 px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
+        >
+          Try Safe Division Demo →
+        </a>
+        <a 
+          href="/comparison" 
+          class="inline-block bg-green-700 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-green-800 transition-colors"
+        >
+          See Before/After Examples →
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <p class="text-center text-gray-500">
+        Monado - Learning Monads Through Practice | Built with Phoenix & Elixir
+      </p>
+    </div>
+  </footer>
+</div>
